@@ -1,4 +1,4 @@
-﻿/* 1. ВИЗНАЧЕННЯ ТЕМ (Змінні) */
+﻿/* 1. ВИЗНАЧЕННЯ ТЕМ  */
 :root {
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
@@ -7,7 +7,7 @@
     --secondary-text: #64748b;
     --border-color: #e2e8f0;
     --item-bg: #f1f5f9;
-    --item-bg-hover: #e0e7ff; /* Світло-синій для hover (не зливається з білим) */
+    --item-bg-hover: #e0e7ff; /* Світло-синій для hover  */
     --accent-color: #2563eb;
 }
 
@@ -55,7 +55,7 @@ h1 {
     text-align: center;
     margin-bottom: 10px;
     letter-spacing: -1px;
-    color: #e11d48 /* Фіксований синій для виразності */
+    color: #166534 
 }
 
 h2 {
@@ -106,7 +106,6 @@ li {
     li:hover {
         transform: translateX(8px);
         background: var(--item-bg-hover);
-        /* Додаємо тінь, щоб блок виділявся на білому фоні */
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 

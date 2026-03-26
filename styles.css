@@ -1,0 +1,219 @@
+﻿/* 1. ВИЗНАЧЕННЯ ТЕМ (Змінні) */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #334155;
+    --heading-color: #1e293b;
+    --secondary-text: #64748b;
+    --border-color: #e2e8f0;
+    --item-bg: #f1f5f9;
+    --item-bg-hover: #e0e7ff; /* Світло-синій для hover (не зливається з білим) */
+    --accent-color: #2563eb;
+}
+
+body.dark-theme {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f1f5f9;
+    --heading-color: #ffffff;
+    --secondary-text: #94a3b8;
+    --border-color: #334155;
+    --item-bg: #334155;
+    --item-bg-hover: #475569; /* Темно-сірий для hover у нічній темі */
+    --accent-color: #3b82f6;
+}
+
+/* 2. ЗАГАЛЬНІ НАЛАШТУВАННЯ */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 3. БЛОК РЕЗЮМЕ */
+.resume-container {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 850px;
+    padding: 60px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+/* 4. ЗАГОЛОВКИ */
+h1 {
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+    color: #1d4ed8; /* Фіксований синій для виразності */
+}
+
+h2 {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1d4ed8;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+    h2::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border-color);
+        margin-left: 15px;
+    }
+
+/* 5. СПИСКИ (КАРТКИ) */
+ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+li {
+    margin-bottom: 12px;
+    padding: 10px 15px 10px 30px;
+    background: var(--item-bg);
+    border-radius: 8px;
+    transition: all 0.3s ease; /* Плавність переходів */
+    position: relative;
+    color: var(--text-color);
+}
+
+    li::before {
+        content: "•";
+        position: absolute;
+        left: 12px;
+        color: var(--accent-color);
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+
+    /* Ефект наведення для ОСНОВНИХ КАРТОК */
+    li:hover {
+        transform: translateX(8px);
+        background: var(--item-bg-hover);
+        /* Додаємо тінь, щоб блок виділявся на білому фоні */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+/* 6. ВКЛАДЕНІ СПИСКИ (ПРОЄКТИ) */
+ul ul li {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 5px 0 5px 20px !important;
+    margin-bottom: 5px;
+    color: inherit;
+}
+
+    ul ul li:hover {
+        transform: none !important;
+        background: transparent !important;
+        color: var(--accent-color) !important;
+    }
+
+    ul ul li::before {
+        content: "—" !important;
+        color: var(--secondary-text) !important;
+        left: 0 !important;
+    }
+
+/* 7. СЕКЦІЯ КОМЕНТАРІВ */
+.comment-card {
+    background-color: var(--item-bg);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: all 0.3s;
+}
+
+    .comment-card:hover {
+        transform: translateX(5px);
+        background: var(--item-bg-hover);
+    }
+
+/* 8. МОДАЛЬНЕ ВІКНО ТА ФОРМА */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--card-bg);
+    color: var(--text-color);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+}
+
+    .modal-content input, .modal-content textarea {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-content button[type="submit"] {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: var(--secondary-text);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* 9. КОНТАКТИ */
+.contacts-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}

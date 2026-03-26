@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Резюме — Турколяк Андрій</title>
+    <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1001;">
+        <button id="theme-toggle" style="padding: 10px 15px; border-radius: 20px; cursor: pointer; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-color);">
+             Змінити тему
+        </button>
+    </div>
+
+    <div class="resume-container">
+
+        <h1>Турколяк Андрій</h1>
+        <hr>
+
+        <h2>Про мене</h2>
+        <p>
+            Студент другого курсу спеціальності «Кібербезпека та захист інформації» у Львівській політехніці.
+            Маю досвід роботи з HTML, Python, C#, базами даних та Cisco Packet Tracer.Маю високий рівень самодисципліни. Завжди націлений на результат та постійне вдосконалення своїх технічних знань.
+        </p>
+
+        <h2>Освіта</h2>
+        <ul>
+            <li>2024-теперішній час:Студент спеціальності "Кібербезпека та захист інформації" Національного університету "Львівська політехніка".</li>
+            <li>Ліцей №75 імені Лесі Українки — повна загальна середня освіта.</li>
+        </ul>
+        <h2>Технічні навички</h2>
+        <ul>
+            <li>HTML (базові знання)</li>
+            <li>Python</li>
+            <li>C# (основи)</li>
+            <li>PHP (веб-розробка)</li>
+            <li>MySQL</li>
+            <li>Cisco Packet Tracer(мережі)</li>
+        </ul>
+
+        <h2>Знання мов</h2>
+        <ul>
+            <li><strong>Українська:</strong> Рідна мова.</li>
+            <li><strong>Англійська:</strong> Рівень B1 (Intermediate).</li>
+            <li><strong>Німецька:</strong> Рівень A1.</li>
+        </ul>
+
+        <h2>Курси та сертифікати</h2>
+        <ul>
+            <li>
+                <strong>«Безпека в інтернеті під час війни»</strong> —
+                онлайн-курс на платформі Prometheus.
+            </li>
+        </ul>
+
+
+        <h2>Досвід (навчальні проєкти)</h2>
+        <ul>
+            <li>
+                <strong>Проєктування бази даних для дитячого садка</strong><br>
+                <ul>
+                    <li>Аналіз предметної області (облік дітей, вихователів, груп)</li>
+                    <li>Проєктування структури бази даних та зв’язків між таблицями</li>
+                    <li>Розробка SQL-запитів для роботи з даними</li>
+                    <li>Робота з СУБД MySQL</li>
+                </ul>
+            </li>
+        </ul>
+
+        <section id="reviews-section">
+            <h2>Відгуки попередніх роботодавців</h2>
+            <div id="comments-container">
+                <p>Завантаження відгуків...</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <h2>Контактна інформація</h2>
+        <ul>
+            <li><strong>Телефон:</strong> +380 68 731 25 64</li>
+            <li><strong>Email:</strong> andriiT@gmail.com</li>
+            <li><strong>Місто:</strong> Львів</li>
+        </ul>
+        <footer id="main-footer" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b;">
+            <strong>Локальні дані системи:</strong>
+            <div id="storage-display">
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Функція для зміни теми
+        function toggleTheme() {
+            body.classList.toggle('dark-theme');
+        }
+
+        // Функція автоматичного перемикання за часом
+        function checkTimeForTheme() {
+            const hour = new Date().getHours(); // Отримуємо поточну годину (0-23)
+
+            // Денна тема від 07:00 до 21:00
+            if (hour >= 7 && hour < 21) {
+                body.classList.remove('dark-theme');
+            } else {
+                body.classList.add('dark-theme');
+            }
+        }
+
+        // Обробник кліку по кнопці
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Запуск перевірки часу при завантаженні
+        checkTimeForTheme();
+
+        // Функція для отримання коментарів із сервера
+        async function loadComments() {
+            const variantNumber = 25;
+            const url = `https://jsonplaceholder.typicode.com/posts/${variantNumber}/comments`;
+
+            try {
+                // Робимо запит до API
+                const response = await fetch(url);
+
+                // Перетворюємо відповідь у формат об'єкта JavaScript
+                const comments = await response.json();
+
+                // Знаходимо контейнер для відображення
+                const container = document.getElementById('comments-container');
+                container.innerHTML = ''; // Очищуємо текст "Завантаження"
+
+                // Відображаємо кожен коментар у порядку отримання
+                comments.forEach(comment => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment-card');
+
+                    commentElement.innerHTML = `
+                        <p><strong>Від:</strong> ${comment.email}</p>
+                        <p><em>"${comment.body}"</em></p>
+                    `;
+                    container.appendChild(commentElement);
+                });
+            } catch (error) {
+                console.error('Помилка завантаження:', error);
+                document.getElementById('comments-container').innerHTML = '<p>Не вдалося завантажити відгуки.</p>';
+            }
+        }
+
+        // Викликаємо функцію завантаження
+        loadComments();
+        //  збереження даних
+        const systemData = {
+            os: navigator.platform,
+            browser: navigator.userAgent,
+            language: navigator.language,
+            lastUpdate: new Date().toLocaleString()
+        };
+
+        // Записуємо об'єкт у пам'ять браузера
+        localStorage.setItem('user_tech_info', JSON.stringify(systemData));
+
+        //  читання та виведення даних
+        const rawData = localStorage.getItem('user_tech_info');
+        const parsedData = JSON.parse(rawData);
+        const displayElement = document.getElementById('storage-display');
+
+        if (parsedData) {
+            displayElement.innerHTML = `
+                            <p style="margin: 5px 0;"> <b>ОС:</b> ${parsedData.os}</p>
+                            <p style="margin: 5px 0;"> <b>Браузер:</b> ${parsedData.browser}</p>
+                            <p style="margin: 5px 0;"> <b>Мова:</b> ${parsedData.language}</p>
+                            <p style="margin: 5px 0;"> <b>Останній запис:</b> ${parsedData.lastUpdate}</p>
+                        `;
+        }
+
+        // Функція для відкриття вікна
+        function showModal() {
+            document.getElementById('contact-modal').style.display = 'flex';
+        }
+
+        // Функція для закриття вікна
+        function closeModal() {
+            document.getElementById('contact-modal').style.display = 'none';
+        }
+
+        // Запуск таймера на 1 хвилину (60000 мілісекунд)
+        setTimeout(showModal, 60000);
+    </script>
+
+    <div id="contact-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Зворотний зв'язок</h3>
+            <p>Будемо раді почути вашу думку!</p>
+            <form action="https://formspree.io/f/mdawbyqd" method="POST">
+                <input type="text" name="name" placeholder="Ваше ім'я" required>
+                <input type="email" name="email" placeholder="Ваш Email" required>
+                <input type="tel" name="phone" placeholder="Номер телефону" required>
+                <textarea name="message" placeholder="Ваше повідомлення" rows="4" required></textarea>
+                <button type="submit">Відправити</button>
+                <button type="button" onclick="closeModal()" class="btn-close">Закрити</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
